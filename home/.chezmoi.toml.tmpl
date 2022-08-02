@@ -1,0 +1,36 @@
+{{ $chezmoiInitd := regexReplaceAll "[^/]+$" .chezmoi.configFile "init.d" -}}
+{{ $chezmoiInitdToml := joinPath $chezmoiInitd "*.toml" -}}
+{{ $chezmoiInitdFeatures := joinPath $chezmoiInitd "features.toml" -}}
+
+umask = "0o022"
+
+[template]
+options = ["missingkey=default"]
+
+{{ if not (stat $chezmoiInitdFeatures) -}}
+
+{{ $msgApply := list "Initialised an empty configuration file. Execute the"
+"following command to create the example configuration fragments:\n"
+"chezmoi apply -r" $chezmoiInitd -}}
+
+{{ $msgReInit := list "Now modify" $chezmoiInitdToml "files if necessary and"
+"run the chezmoi init command again to recreate the configuration file based"
+"on those configuration fragments." -}}
+
+{{ writeToStdout (print "\n" (wrap 80 ($msgApply | join " ")) "\n") -}}
+{{ writeToStdout (print "\n" (wrap 80 ($msgReInit | join " ")) "\n") -}}
+
+{{ else -}}
+
+{{ range (glob $chezmoiInitdToml) -}}
+{{ include . }}
+{{ end -}}
+
+{{ $msgAutoInit := list "Recreated configuration file using configuration"
+"fragments found using" $chezmoiInitdToml "glob pattern." -}}
+
+{{ writeToStdout (print "\n" (wrap 80 ($msgAutoInit | join " ")) "\n") -}}
+
+{{ end -}}
+
+{{ writeToStdout "\n" -}}

@@ -1,0 +1,4 @@
+#!/bin/sh
+# shellcheck disable=SC1090
+
+~/.local/bin/vendor/starship/install.sh -b ~/.local/bin

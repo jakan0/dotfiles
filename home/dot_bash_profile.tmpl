@@ -1,0 +1,30 @@
+{{ if .features.bash -}}
+# .bash_profile
+# shellcheck shell=bash disable=SC1090,SC2154
+
+while IFS= read -r path; do
+  if ! [[ :${PATH}: == *:${path}:* ]]; then
+    PATH="${path}:${PATH}"
+  fi
+done << EOF
+{{ if .shell.custom_paths -}}
+{{ range (.shell.custom_paths | reverse) -}}
+{{ . }}
+{{ end -}}
+{{ end -}}
+EOF
+export PATH
+
+if [ -z "${SSH_AGENT_PID}" ] && command -v ssh-agent > /dev/null; then
+  eval "$(ssh-agent -s -t 3600)" > /dev/null
+fi
+
+export EDITOR="nano"
+export HISTCONTROL="ignoreboth:erasedups"
+export HISTSIZE="1000"
+export LESSHISTFILE="/dev/null"
+
+if [ -r ~/.bashrc ]; then
+  . ~/.bashrc
+fi
+{{ end }}

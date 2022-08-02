@@ -1,0 +1,29 @@
+[".local/bin/vendor/git/git-prompt.sh"]
+type = "file"
+url = "https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh"
+refreshPeriod = "720h"
+
+[".local/bin/vendor/chezmoi/install.sh"]
+type = "file"
+url = "https://raw.githubusercontent.com/twpayne/chezmoi/master/assets/scripts/install.sh"
+refreshPeriod = "720h"
+executable = true
+
+[".local/bin/vendor/starship/install.sh"]
+type = "file"
+url = "https://raw.githubusercontent.com/starship/starship/master/install/install.sh"
+refreshPeriod = "720h"
+executable = true
+
+{{ if .features.cheat -}}
+{{ range .cheat.cheatsheets -}}
+{{ if .url }}
+[".local/share/cheat/{{ .name }}"]
+type = "git-repo"
+url = "{{ .url }}"
+{{- if .refresh_period }}
+refreshPeriod = "{{ .refresh_period }}"
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}

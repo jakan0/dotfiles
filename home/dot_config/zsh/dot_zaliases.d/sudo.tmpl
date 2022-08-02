@@ -1,0 +1,4 @@
+{{ if .features.zsh -}}
+# shellcheck shell=bash
+{{ template "bash-function-sudo" -}}
+{{ end }}

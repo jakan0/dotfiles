@@ -1,0 +1,12 @@
+function sudo {
+  case "$1" in
+    cp|mv|rm)
+      cmd="$1"
+      shift
+      command sudo "${cmd}" -i "$@"
+      ;;
+    *)
+      command sudo "$@"
+      ;;
+  esac
+}

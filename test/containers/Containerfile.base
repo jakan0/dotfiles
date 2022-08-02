@@ -1,0 +1,8 @@
+FROM docker.io/bats/bats:latest
+RUN apk add --no-cache git tree nano bash zsh openssh terraform go coreutils
+RUN sh -c "$(wget -qO- https://chezmoi.io/get)" -- -b /usr/local/bin
+RUN GOPATH=/root go install github.com/cheat/cheat/cmd/cheat@latest
+RUN git clone https://github.com/bats-core/bats-support.git /root/.bats/test_helper/bats-support
+RUN git clone https://github.com/bats-core/bats-assert.git /root/.bats/test_helper/bats-assert
+RUN git clone https://github.com/bats-core/bats-file.git /root/.bats/test_helper/bats-file
+WORKDIR /root

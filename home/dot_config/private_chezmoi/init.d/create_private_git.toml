@@ -1,0 +1,22 @@
+# [data.git.user]
+# name = ""
+# email = ""
+# signing_key = ""
+
+# [data.git.include_if]]
+# condition = "hasconfig:remote.*.url:https://github.com/**"
+# user.name = ""
+# user.email = ""
+# user.signing_key = ""
+
+# [[data.git.http]]
+# url = "https://www.example.com/"
+# extra_header = "Authorization: <auth-scheme> <authorization-parameters>"
+
+# [[data.git.url]]
+# base = "git@github.com:"
+# instead_of = "https://github.com/"
+# push_instead_of = "https://github.com/"
+
+# [data.git.commit]
+# gpg_sign = false

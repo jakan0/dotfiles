@@ -1,0 +1,15 @@
+{{ if .features.zsh -}}
+# .zprofile
+
+export EDITOR="nano"
+export LESSHISTFILE="/dev/null"
+
+typeset -U path
+path=(${HOME}/.local/bin $path)
+path=($^path(-/N))
+export PATH
+
+if [ -z "${SSH_AGENT_PID}" ] && command -v ssh-agent > /dev/null; then
+  eval "$(ssh-agent -s -t 3600)" > /dev/null
+fi
+{{ end }}

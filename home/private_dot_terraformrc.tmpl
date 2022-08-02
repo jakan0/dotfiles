@@ -1,0 +1,9 @@
+{{ if .features.terraform -}}
+{{ range .terraform.credentials -}}
+credentials "{{ .host }}" {
+  token = "{{ .token }}"
+}
+
+{{ end -}}
+plugin_cache_dir = "${HOME}/.cache/terraform/plugins"
+{{ end }}

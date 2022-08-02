@@ -1,0 +1,16 @@
+[data.features]
+bash = false
+cargo = false
+cheat = false
+flake8 = false
+flatpak = false
+fontconfig = false
+git = false
+nobackup = false
+shellcheck = false
+ssh = false
+starship = false
+terraform = false
+tmux = false
+vscode = false
+zsh = false

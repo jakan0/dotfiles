@@ -1,0 +1,6 @@
+# [[data.cheat.cheatsheets]]
+# name = "community"
+# tags = ["community"]
+# url = "https://github.com/cheat/cheatsheets"
+# refresh_period = "720h"
+# readonly = true

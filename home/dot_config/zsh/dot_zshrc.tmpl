@@ -1,0 +1,38 @@
+{{ if .features.zsh -}}
+# .zshrc
+
+umask 0022
+bindkey -e
+setopt nobeep
+
+setopt hist_ignore_all_dups
+setopt hist_ignore_space
+setopt hist_reduce_blanks
+setopt share_history
+
+HISTFILE="${ZDOTDIR:-~}/.zhistory"
+HISTSIZE="1000"
+SAVEHIST="1000"
+
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
+bindkey "^[[1~" beginning-of-line
+bindkey "^[[3~" delete-char
+bindkey "^[[4~" end-of-line
+bindkey "^[[F" end-of-line
+bindkey "^[[H" beginning-of-line
+
+autoload -Uz compinit && compinit
+
+if command -v starship > /dev/null; then
+  eval "$(starship init zsh)"
+# else # git-prompt-customise doesn't seem to work with zsh for some reason
+#   . ~/.local/bin/git-prompt-customise
+fi
+
+export GPG_TTY=$(tty)
+
+if [ -r "${ZDOTDIR:-~}/.zaliases" ]; then
+  . "${ZDOTDIR:-~}/.zaliases"
+fi
+{{ end }}

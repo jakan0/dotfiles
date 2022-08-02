@@ -1,0 +1,7 @@
+{{ if .features.zsh -}}
+{{ $paths := dict
+"configDir" (regexReplaceAll "/[^/]+$" .chezmoi.configFile "")
+"sourceDir" (regexReplaceAll "/[^/]+$" .chezmoi.sourceDir "") -}}
+# shellcheck shell=bash
+{{ template "bash-function-chezmoi" $paths -}}
+{{ end }}

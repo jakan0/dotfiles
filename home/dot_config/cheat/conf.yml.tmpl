@@ -1,0 +1,20 @@
+{{ if .features.cheat -}}
+---
+colorize: true
+editor: nano
+formatter: terminal256
+pager: less -FRX
+style: native
+
+{{ if .cheat.cheatsheets -}}
+cheatpaths:
+{{ $home := .chezmoi.homeDir -}}
+{{ range .cheat.cheatsheets -}}
+- name: {{ .name }}
+  path: {{ $home }}/.local/share/cheat/{{ .name }}
+  tags: [{{ .tags | join "," }}]
+  readonly: {{ .readonly }}
+
+{{ end -}}
+{{ end -}}
+{{ end -}}

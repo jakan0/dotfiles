@@ -1,0 +1,2 @@
+[[data.git.include_if]]
+condition = "hasconfig:remote.*.url:https://github.com/**"

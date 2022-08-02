@@ -1,0 +1,21 @@
+# shellcheck shell=bash disable=SC1090
+
+. ~/.local/bin/vendor/git/git-prompt.sh
+
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWSTASHSTATE=1
+export GIT_PS1_SHOWUNTRACKEDFILES=1
+export GIT_PS1_SHOWUPSTREAM="auto"
+export GIT_PS1_SHOWCOLORHINTS=1
+
+function prompt_command() {
+  local pre_prompt="\[\033[0;32m\]\n\u@\h\[\033[0m\]"
+  if [ -n "${VIRTUAL_ENV}" ]; then
+    pre_prompt="${pre_prompt} \[\033[0;33m\](${VIRTUAL_ENV##*/})\[\033[0m\]"
+  fi
+  pre_prompt="${pre_prompt} \[\033[0;36m\]\w\[\033[0m\]"
+  local post_prompt="\n\[\033[1;30m\]\$\[\033[0m\] "
+  __git_ps1 "${pre_prompt}" "${post_prompt}"
+}
+
+PROMPT_COMMAND="prompt_command"

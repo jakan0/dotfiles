@@ -1,0 +1,8 @@
+{{ if .features.bash -}}
+# .bash_logout
+# shellcheck shell=bash
+
+if [ ${SHLVL} -eq 1 ] && command -v ssh-agent > /dev/null; then
+  eval "$(ssh-agent -k)" > /dev/null
+fi
+{{ end }}

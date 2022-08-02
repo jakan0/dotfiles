@@ -1,0 +1,13 @@
+# [[data.ssh.hosts]]
+# match = 'host github.com exec "[ $(git config user.email) = foobar@locahost ]"'
+# host = "172.16.1.*"
+# hostname = ""
+# identity_file = "~/.ssh/id_rsa"
+# local_forward = []
+# log_level = ""
+# password_authentication = false
+# preferred_authentications = "publickey"
+# pubkey_authentication = true
+# strict_host_key_checking = true
+# user = "vagrant"
+# user_known_hosts_file = "/dev/null"

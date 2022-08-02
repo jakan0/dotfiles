@@ -1,0 +1,7 @@
+{{ if not .features.cheat -}}
+{{- range .cheat.cheatsheets }}
+{{ if .url }}
+.local/share/cheat/{{ .name }}
+{{- end }}
+{{- end }}
+{{- end }}

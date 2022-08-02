@@ -1,0 +1,5 @@
+[[data.cheat.cheatsheets]]
+name = "community"
+tags = ["community"]
+#url = "https://github.com/cheat/cheatsheets"
+readonly = true

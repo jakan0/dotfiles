@@ -1,0 +1,87 @@
+{{ if .features.git -}}
+{{ $configDir := joinPath .chezmoi.homeDir ".config" "git" -}}
+[user]
+{{- if .git.user.name }}
+name = {{ .git.user.name }}
+{{- end }}
+{{- if .git.user.email }}
+email = {{ .git.user.email }}
+{{- end }}
+{{- if .git.user.signing_key }}
+signingKey = {{ .git.user.signing_key }}
+{{- end }}
+useConfigOnly = true
+
+{{ range .git.include_if -}}
+[includeIf "{{ .condition }}"]
+path = {{ joinPath $configDir "include" (print (sha1sum .condition) ".conf") }}
+
+{{ end -}}
+{{ range .git.http -}}
+[http "{{ .url }}"]
+extraHeader = {{ .extra_header }}
+
+{{ end -}}
+{{ range .git.url -}}
+[url "{{ .base }}"]
+{{- if .instead_of }}
+insteadOf = {{ .instead_of }}
+{{- else }}
+pushInsteadOf = {{ .push_instead_of }}
+{{- end }}
+
+{{ end -}}
+[alias]
+c = commit
+co = checkout
+cp = cherry-pick --no-commit
+debug = !GIT_TRACE=1 git
+del = branch -D
+fake = "!d=$(git show -s --format=%at $1); GIT_COMMITTER_DATE=$d git commit --date=$d #"
+ll = log --graph --oneline --decorate
+load = stash pop
+ls = log --oneline
+new = checkout -b
+s = status
+save = stash --include-untracked
+stag = "!git tag -s -m $1 $1 #"
+undo = reset HEAD~1 --mixed
+vtag = "!t=v${1#v}; git tag -s -m $t $t #"
+
+[commit]
+gpgSign = {{ ternary .git.commit.gpg_sign true (hasKey .git.commit "gpg_sign") }}
+template = {{ joinPath $configDir "line-length" }}
+
+[fetch]
+prune = true
+
+[init]
+defaultBranch = main
+
+[merge]
+ff = no
+conflictStyle = zdiff3
+
+[pull]
+ff = yes
+
+[push]
+followTags = true
+
+[rerere]
+enabled = true
+autoUpdate = true
+
+[status]
+showStash = true
+
+[tag]
+sort = -v:refname
+
+[versionsort]
+suffix = -dev
+suffix = -alpha
+suffix = -beta
+suffix = -pre
+suffix = -rc
+{{ end }}

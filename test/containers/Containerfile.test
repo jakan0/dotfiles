@@ -1,0 +1,5 @@
+FROM localhost/dotfiles-base:latest
+COPY home /root/.local/share/chezmoi
+COPY test/config /root/.config/chezmoi/init.d
+COPY home/dot_config/private_chezmoi/init.d/create_private_features.toml /root/.config/chezmoi/init.d/features.toml
+COPY test/tests /root/.bats

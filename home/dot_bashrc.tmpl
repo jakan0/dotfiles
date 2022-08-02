@@ -1,0 +1,23 @@
+{{ if .features.bash -}}
+# .bashrc
+# shellcheck shell=bash disable=SC1090,SC2155
+
+umask 0022
+shopt -s histappend
+
+if shopt -q progcomp && [ -r /usr/share/bash-completion/bash_completion ]; then
+  . /usr/share/bash-completion/bash_completion
+fi
+
+if command -v starship > /dev/null; then
+  eval "$(starship init bash)"
+elif [ -r ~/.local/bin/git-prompt-customise ]; then
+  . ~/.local/bin/git-prompt-customise
+fi
+
+export GPG_TTY="$(tty)"
+
+if [ -r ~/.bash_aliases ]; then
+  . ~/.bash_aliases
+fi
+{{ end }}

@@ -1,0 +1,34 @@
+{{ $includeDir := joinPath .chezmoi.homeDir ".config" "git" "include" -}}
+#!/bin/sh
+set -eu
+
+if [ -d "{{ $includeDir }}" ]; then
+{{- if or (not .features.git) (not .git.include_if) }}
+  rm -rf "{{ $includeDir }}"
+fi
+{{- else }}
+  rm -f "{{ $includeDir }}/*"
+fi
+{{- end }}
+{{- if and .features.git .git.include_if }}
+
+mkdir -p "{{ $includeDir }}"
+
+{{ range .git.include_if -}}
+cat <<EOT > "{{ joinPath $includeDir (print (sha1sum .condition) ".conf") }}"
+{{ if .user -}}
+[user]
+{{ if .user.name -}}
+name = {{ .user.name }}
+{{ end -}}
+{{ if .user.email -}}
+email = {{ .user.email }}
+{{ end -}}
+{{ if .user.signing_key -}}
+signingKey = {{ .user.signing_key }}
+{{ end -}}
+{{ end }}
+EOT
+
+{{ end -}}
+{{ end -}}

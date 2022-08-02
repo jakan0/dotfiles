@@ -1,0 +1,77 @@
+{{ range .ssh.hosts -}}
+{{- if .match -}}
+Match {{ .match }}
+{{- else if .host -}}
+Host {{ .host }}
+{{- else }}
+{{- fail "Either 'match' or 'host' must be defined" }}
+{{- end }}
+{{- if .hostname }}
+  Hostname {{ .hostname }}
+{{- end }}
+{{- if .identity_file }}
+  IdentityFile {{ .identity_file }}
+{{- end }}
+{{- if kindIs "slice" .local_forward }}
+{{- range .local_forward }}
+  LocalForward {{ . }}
+{{- end }}
+{{- else if .local_forward }}
+  LocalForward {{ .local_forward }}
+{{- end }}
+{{- if .log_level }}
+  LogLevel {{ .log_level }}
+{{- end }}
+{{- if kindIs "bool" .password_authentication }}
+  PasswordAuthentication {{ ternary "yes" "no" .password_authentication }}
+{{- else if .password_authentication }}
+  PasswordAuthentication {{ .password_authentication }}
+{{- end }}
+{{- if .preferred_authentications }}
+  PreferredAuthentications {{ .preferred_authentications }}
+{{- end }}
+{{- if kindIs "bool" .pubkey_authentication }}
+  PubkeyAuthentication {{ ternary "yes" "no" .pubkey_authentication }}
+{{- end }}
+{{- if kindIs "bool" .strict_host_key_checking }}
+  StrictHostKeyChecking {{ ternary "yes" "no" .strict_host_key_checking }}
+{{- else if .strict_host_key_checking }}
+  StrictHostKeyChecking {{ .strict_host_key_checking }}
+{{- end }}
+{{- if .user }}
+  User {{ .user }}
+{{- end }}
+{{- if .user_known_hosts_file }}
+  UserKnownHostsFile {{ .user_known_hosts_file }}
+{{- end }}
+
+{{ end -}}
+Host *
+  # Agent
+  AddKeysToAgent yes
+  ForwardAgent no
+  IdentitiesOnly yes
+
+  # Authentication
+  GSSAPIAuthentication no
+  HostbasedAuthentication no
+  KbdInteractiveAuthentication yes
+  PasswordAuthentication no
+  PreferredAuthentications publickey,keyboard-interactive,password
+  PubkeyAuthentication yes
+
+  # Connection
+  Compression no
+  ForwardX11 no
+  ServerAliveCountMax 2
+  ServerAliveInterval 30
+  TCPKeepAlive no
+
+  # Host
+  CheckHostIP yes
+  FingerprintHash sha256
+  HashKnownHosts yes
+  StrictHostKeyChecking ask
+  UpdateHostKeys yes
+  VerifyHostKeyDNS yes
+

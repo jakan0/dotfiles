@@ -1,0 +1,55 @@
+#!/bin/sh
+set -eu
+
+while IFS= read -r line; do
+  if [ -z "${line}" ]; then
+    continue
+  fi
+
+  path="${HOME}/${line}"
+  if [ -d "${path}" ]; then
+    find "${path}" -type d -empty -delete
+  elif [ -e "${path}" ]; then
+    rm "${path}"
+  fi
+done <<EOT
+{{ if not .features.bash -}}
+.bash_history
+{{ end -}}
+{{ if not .features.cargo -}}
+.cargo
+{{ end -}}
+{{ if not .features.cheat -}}
+.config/cheat
+{{ end -}}
+{{ if not .features.fontconfig -}}
+.config/fontconfig
+{{ end -}}
+{{ if not .features.git -}}
+.config/git
+{{ end -}}
+{{ if not .features.nobackup -}}
+.vscode-server
+.vscode
+.var/app
+.var
+.vagrant.d
+.local/share/libvirt
+.local/share/containers
+.local/pipx
+.local/lib
+.cargo
+{{ end -}}
+{{ if not .features.terraform -}}
+.cache/terraform
+{{ end -}}
+{{ if not .features.vscode -}}
+.config/Code
+{{ end -}}
+{{ if not .features.zsh -}}
+.config/zsh/.zhistory
+.config/zsh/.zcompdump
+.config/zsh/.zaliases.d
+.config/zsh
+{{ end -}}
+EOT

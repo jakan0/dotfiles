@@ -1,0 +1,24 @@
+{{ if .features.bash -}}
+# .bash_aliases
+# shellcheck shell=bash
+
+alias df="df -H"
+alias du="du -d1 --si -x"
+alias l1="ls -N1 --color=auto"
+alias ll="ls -la --si --color=auto"
+alias ps="ps -efH"
+alias rm="rm -i"
+
+function sudo {
+  case "$1" in
+    cp|mv|rm)
+      cmd="$1"
+      shift
+      command sudo "${cmd}" -i "$@"
+      ;;
+    *)
+      command sudo "$@"
+      ;;
+  esac
+}
+{{ end }}

@@ -1,0 +1,18 @@
+function tf {
+  local args=()
+
+  for arg; do
+    shift
+    case "${arg}" in
+      fmt)
+        args+=("${arg}" -recursive)
+        ;;
+      -recursive|--recursive)
+        ;;
+      *)
+        args+=("${arg}")
+        ;;
+    esac
+  done
+  command terraform "${args[@]}"
+}

@@ -1,0 +1,44 @@
+function chezmoi {
+  local skip=0
+  local init=0
+  local root=""
+  local argv0=()
+  local argv1=()
+  local argv2=()
+
+  for arg; do
+    shift
+    case "${arg}" in
+      --alt-root)
+        skip=1
+        root="$1"
+        argv1+=(--config "{{ .configDir }}/${root}.toml")
+        argv1+=(--persistent-state "{{ .configDir }}/${root}state.boltdb")
+        argv1+=(--source "{{ .sourceDir }}/${root}")
+        ;;
+      -C|--config-path|-c|--config|-S|--source|--persistent-state)
+        skip=1
+        argv2+=("${arg}" "$1")
+        ;;
+      init)
+        init=1
+        argv0+=("${arg}")
+        ;;
+      *)
+        [ "${skip}" -eq "0" ] && argv0+=("${arg}")
+        skip=0
+        ;;
+    esac
+  done
+
+  if [ -n "${root}" ]; then
+    if [ "${init}" -eq 1 ]; then
+      argv1=(--config-path "{{ .configDir }}/${root}.toml" "${argv1[@]}")
+    fi
+    argv0=("${argv1[@]}" "${argv0[@]}")
+  else
+    argv0=("${argv2[@]}" "${argv0[@]}")
+  fi
+
+  command chezmoi "${argv0[@]}"
+}

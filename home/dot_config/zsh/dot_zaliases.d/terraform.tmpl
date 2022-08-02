@@ -1,0 +1,4 @@
+{{- if (and .features.zsh .features.terraform) }}
+# shellcheck shell=bash
+{{ template "bash-function-tf" -}}
+{{ end }}

@@ -1,0 +1,15 @@
+{{ if .features.zsh -}}
+# .zaliases
+
+alias df="df -H"
+alias du="du -d1 --si -x"
+alias l1="ls -N1 --color=auto"
+alias ll="ls -la --si --color=auto"
+alias ps="ps -efH"
+alias rm="rm -i"
+
+zaliases=("${ZDOTDIR:-~}/.zaliases.d/"*(N))
+for file in ${zaliases}; do
+  . "${file}"
+done
+{{ end }}
