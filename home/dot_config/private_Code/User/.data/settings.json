@@ -92,12 +92,7 @@
   "search.smartCase": true,
   "settingsSync.keybindingsPerPlatform": false,
   "telemetry.telemetryLevel": "off",
-  "terraform.languageServer": {
-    "args": [
-      "serve"
-    ],
-    "external": true
-  },
+  "terraform.languageServer.enable": true,
   "update.mode": "none",
   "window.titleBarStyle": "custom",
   "workbench.colorTheme": "GitHub Dark",
