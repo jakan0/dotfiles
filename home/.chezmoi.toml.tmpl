@@ -2,7 +2,7 @@
 {{ $chezmoiInitdToml := joinPath $chezmoiInitd "*.toml" -}}
 {{ $chezmoiInitdFeatures := joinPath $chezmoiInitd "features.toml" -}}
 
-umask = "0o022"
+umask = 0o022
 
 [template]
 options = ["missingkey=default"]
