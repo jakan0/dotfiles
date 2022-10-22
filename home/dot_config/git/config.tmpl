@@ -60,7 +60,7 @@ defaultBranch = main
 
 [merge]
 ff = no
-conflictStyle = zdiff3
+conflictStyle = {{ ternary .git.merge.conflict_style "diff3" (hasKey .git.merge "conflict_style") }}
 
 [pull]
 ff = yes

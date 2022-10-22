@@ -20,3 +20,6 @@
 
 # [data.git.commit]
 # gpg_sign = false
+
+# [data.git.merge]
+# conflict_style = "diff3"
