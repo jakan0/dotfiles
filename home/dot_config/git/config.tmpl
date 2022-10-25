@@ -26,7 +26,8 @@ extraHeader = {{ .extra_header }}
 [url "{{ .base }}"]
 {{- if .instead_of }}
 insteadOf = {{ .instead_of }}
-{{- else }}
+{{- end }}
+{{- if .push_instead_of }}
 pushInsteadOf = {{ .push_instead_of }}
 {{- end }}
 
