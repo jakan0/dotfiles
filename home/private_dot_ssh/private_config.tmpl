@@ -30,6 +30,9 @@ Host {{ .host }}
 {{- if .preferred_authentications }}
   PreferredAuthentications {{ .preferred_authentications }}
 {{- end }}
+{{- if .proxy_jump }}
+  ProxyJump {{ .proxy_jump }}
+{{- end }}
 {{- if kindIs "bool" .pubkey_authentication }}
   PubkeyAuthentication {{ ternary "yes" "no" .pubkey_authentication }}
 {{- end }}

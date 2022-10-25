@@ -7,6 +7,7 @@
 # log_level = ""
 # password_authentication = false
 # preferred_authentications = "publickey"
+# proxy_jump = "none"
 # pubkey_authentication = true
 # strict_host_key_checking = true
 # user = "vagrant"
